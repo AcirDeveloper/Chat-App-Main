@@ -14,6 +14,20 @@ const userRegister = async (req, res, next) => {
     }
 }
 
+const getAllUser = async (req, res, next) => {
+    try {
+        const user = await UserServices.getAll()
+        res.json(user)
+    } catch (error) {
+        next({
+            status: 400,
+            errorContent: error,
+            message: 'Error al obtener los usuarios',
+        })
+    }
+}
+
 module.exports = {
     userRegister,
+    getAllUser,
 }

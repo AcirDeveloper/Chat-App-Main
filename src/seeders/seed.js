@@ -1,72 +1,85 @@
 const db = require('../utils/database')
-const { Users, Conversations, Messages, Participants } = require('./index')
+const { Users, Participants, Messages, Conversations } = require('../models')
 const initModels = require('../models/initModels')
 
 initModels()
 
 const users = [
     {
-        firstname: 'John',
-        lastname: 'Doe',
-        email: 'john@gmail.com',
-        password: '12dfh56',
-        phone: '123432189',
+        firstname: 'María',
+        lastname: 'Godoy',
+        email: 'maria@gmail.com',
+        password: '1234',
+        phone: '0000000000',
     },
     {
-        firstname: 'Jane',
-        lastname: 'Doe',
-        email: 'jane@gmail.com',
-        password: '12df456',
-        phone: '123456789',
+        firstname: 'Germán ',
+        lastname: 'Silva',
+        email: 'ger@hotmail.com',
+        password: '123456',
+        phone: '5599887744',
     },
     {
-        firstname: 'Jack',
-        lastname: 'Doe',
-        email: 'jack@gmail.com',
-        password: '1er56',
-        phone: '123445689',
+        firstname: 'Jose',
+        lastname: 'Tejero',
+        email: 'jose@email.com',
+        password: '1234',
+        phone: '9999999999',
     },
 ]
 
 const conversations = [
-    { title: 'Con los compas', type: 'group', createdBy: 1 },
-    { title: 'Chat de Jane', type: 'single', createdBy: 2 },
-    { title: 'Chat de Jack', type: 'single', createdBy: 3 },
+    {
+        title: 'Con el compa',
+        createdBy: 2,
+    },
+    {
+        title: 'Con los compas',
+        type: 'group',
+        createdBy: 1,
+    },
+    {
+        title: 'No idea',
+        createdBy: 3,
+    },
 ]
 
 const participants = [
-    { userId: 1, conversationId: 1 },
-    { userId: 2, conversationId: 1 },
-    { userId: 3, conversationId: 1 },
-    { userId: 1, conversationId: 2 },
-    { userId: 2, conversationId: 1 },
-    { userId: 2, conversationId: 3 },
-    { userId: 3, conversationId: 2 },
+    { conversationId: 1, userId: 2 },
+    { conversationId: 1, userId: 1 },
+    { conversationId: 2, userId: 1 },
+    { conversationId: 2, userId: 2 },
+    { conversationId: 2, userId: 3 },
+    { conversationId: 3, userId: 3 },
+    { conversationId: 3, userId: 1 },
 ]
 
 const messages = [
-    { senderId: 1, conversationId: 1, text: 'Salimos o k' },
-    { senderId: 2, conversationId: 1, text: 'No puedo ando con express y sequilize' },
-    { senderId: 3, conversationId: 1, text: 'No me digas' },
-    { senderId: 1, conversationId: 2, text: 'Hola' },
-    { senderId: 2, conversationId: 1, text: 'Quien eres?' },
-    { senderId: 1, conversationId: 2, text: 'No se dimelo tu' },
-    { senderId: 2, conversationId: 3, text: 'Vamos?' },
-    { senderId: 3, conversationId: 2, text: 'No puedo' },
+    { senderId: 2, conversationId: 1, message: 'Hola' },
+    { senderId: 1, conversationId: 1, message: 'Quien eres?' },
+    { senderId: 2, conversationId: 1, message: 'No lo sé, dime tu!' },
+    { senderId: 3, conversationId: 2, message: 'Salimos o k?' },
+    {
+        senderId: 1,
+        conversationId: 2,
+        message: 'No puedo ando con express y sequelize',
+    },
+    { senderId: 3, conversationId: 2, message: 'No me digas!' },
+    { senderId: 2, conversationId: 2, message: 'Yo ya envie los proyectos!' },
+    { senderId: 3, conversationId: 3, message: 'Ya estoy aqui' },
+    { senderId: 1, conversationId: 3, message: 'Voy bajando' },
 ]
 
-db.sync({ force: true })
-    .then(() => {
-        console.log('Base de datos sincronizada')
-        users.forEach(async (user) => await Users.create(user))
-        setTimeout(() => {
-            conversations.forEach(async (conversation) => await Conversations.create(conversation))
-        }, 100)
-        setTimeout(() => {
-            participants.forEach(async (participant) => await Participants.create(participant))
-        }, 200)
-        setTimeout(() => {
-            messages.forEach(async (message) => await Messages.create(message))
-        }, 300)
-    })
-    .catch((error) => console.log(error))
+db.sync({ force: true }).then(() => {
+    console.log('Sinronizado')
+    users.forEach(async (user) => await Users.create(user))
+    setTimeout(() => {
+        conversations.forEach(async (conversation) => await Conversations.create(conversation))
+    }, 100)
+    setTimeout(() => {
+        participants.forEach(async (participant) => await Participants.create(participant))
+    }, 200)
+    setTimeout(() => {
+        messages.forEach(async (message) => await Messages.create(message))
+    }, 300)
+})

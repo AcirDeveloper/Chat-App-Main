@@ -1,3 +1,3 @@
-const UserServices = require('./user.services')
+const UserServices = require('./users.services')
 
 module.exports = { UserServices }
