@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken')
 require('dotenv').config()
 
 class AuthServices {
-    static async login(credentials) {
+    static async authenticate(credentials) {
         try {
             const { email, password } = credentials
             const result = await Users.findOne({
@@ -12,15 +12,19 @@ class AuthServices {
             })
             if (result) {
                 const isValid = bcrypt.compareSync(password, result.password)
+                return isValid ? { isValid, result } : isValid
+            } else {
+                return result
             }
         } catch (error) {
             throw error
         }
     }
+
     static genToken(data) {
         try {
             const token = jwt.sign(data, process.env.SECRET_KEY, {
-                expiresIn: '1h',
+                expiresIn: '2h',
                 algorithm: 'HS512',
             })
             return token
@@ -29,3 +33,8 @@ class AuthServices {
         }
     }
 }
+
+module.exports = AuthServices
+
+// email --> tengo que obtener al usuario de la base de datos
+//

@@ -3,6 +3,6 @@ const { userLogin } = require('../controllers')
 
 const router = Router()
 
-router.post('auth/login', userLogin)
+router.post('/auth/login', userLogin)
 
 module.exports = router
